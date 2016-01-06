@@ -16,6 +16,7 @@
 		BF7E51F61C3D51BA00823F20 /* JSONSerializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7E51F41C3D51BA00823F20 /* JSONSerializable.swift */; };
 		BF7E51FB1C3D520200823F20 /* JSONDeserializationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7E51F91C3D520200823F20 /* JSONDeserializationTests.swift */; };
 		BF7E51FC1C3D520200823F20 /* JSONSerializationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7E51FA1C3D520200823F20 /* JSONSerializationTests.swift */; };
+		BF7E51FE1C3D53CB00823F20 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = BF7E51FD1C3D53CB00823F20 /* README.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -41,6 +42,7 @@
 		BF7E51F41C3D51BA00823F20 /* JSONSerializable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONSerializable.swift; sourceTree = "<group>"; };
 		BF7E51F91C3D520200823F20 /* JSONDeserializationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONDeserializationTests.swift; sourceTree = "<group>"; };
 		BF7E51FA1C3D520200823F20 /* JSONSerializationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONSerializationTests.swift; sourceTree = "<group>"; };
+		BF7E51FD1C3D53CB00823F20 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,6 +67,7 @@
 		BF7E51C91C3D509F00823F20 = {
 			isa = PBXGroup;
 			children = (
+				BF7E51FD1C3D53CB00823F20 /* README.md */,
 				BF7E51D51C3D509F00823F20 /* CaesarParser */,
 				BF7E51E11C3D509F00823F20 /* CaesarParserTests */,
 				BF7E51D41C3D509F00823F20 /* Products */,
@@ -240,6 +243,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BF7E51FE1C3D53CB00823F20 /* README.md in Sources */,
 				BF7E51FC1C3D520200823F20 /* JSONSerializationTests.swift in Sources */,
 				BF7E51FB1C3D520200823F20 /* JSONDeserializationTests.swift in Sources */,
 			);
