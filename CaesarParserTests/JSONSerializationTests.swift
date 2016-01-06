@@ -68,11 +68,11 @@ class JSONSerializationTests: XCTestCase {
         person.adult = true
 
         if let dict = person.toJSONObject() as? JSONDictionary {
-            XCTAssertEqual(dict["name"] as! String, "lancy", "my name is lancy")
-            XCTAssertEqual(dict["age"] as! Int, 23, "I'm 23")
-            XCTAssertEqual(dict["birthday"] as! Double, 14, "my birthday is 14")
-            XCTAssertEqual(dict["weight"] as! Float, 60, "weight 60!")
-            XCTAssertEqual(dict["adult"] as! Bool, true, "i'm an adult")
+            XCTAssertEqual((dict["name"] as! String), "lancy", "my name is lancy")
+            XCTAssertEqual((dict["age"] as! Int), 23, "I'm 23")
+            XCTAssertEqual((dict["birthday"] as! Double), 14, "my birthday is 14")
+            XCTAssertEqual((dict["weight"] as! Float), 60, "weight 60!")
+            XCTAssertEqual((dict["adult"] as! Bool), true, "i'm an adult")
         } else {
             XCTFail("JSON Object should be a dictionary")
         }
@@ -82,7 +82,7 @@ class JSONSerializationTests: XCTestCase {
         let person = Person(name: "God")
         person.sex = .Female
         if let dict = person.toJSONObject() as? JSONDictionary {
-            XCTAssertEqual(dict["sex"] as! Int, Sex.Female.rawValue, "God is a girl")
+            XCTAssertEqual((dict["sex"] as! Int), Sex.Female.rawValue, "God is a girl")
         } else {
             XCTFail("JSON Object of Person should be a dictionary")
         }
@@ -92,11 +92,11 @@ class JSONSerializationTests: XCTestCase {
         let person = Person(name: "siri")
         person.orientation = [.Male, .Female, .Unknown]
         if let dict = person.toJSONObject() as? JSONDictionary {
-            XCTAssertEqual(dict["name"] as! String, "siri", "my name is siri")
+            XCTAssertEqual((dict["name"] as! String), "siri", "my name is siri")
             if let orientation = dict["orientation"] as? [Int] {
-                XCTAssertEqual(orientation[0] as! Int, Sex.Male.rawValue, "siri likes male!")
-                XCTAssertEqual(orientation[1] as! Int, Sex.Female.rawValue, "siri also likes female!")
-                XCTAssertEqual(orientation[2] as! Int, Sex.Unknown.rawValue, "and siri likes all others!")
+                XCTAssertEqual(orientation[0], Sex.Male.rawValue, "siri likes male!")
+                XCTAssertEqual(orientation[1], Sex.Female.rawValue, "siri also likes female!")
+                XCTAssertEqual(orientation[2], Sex.Unknown.rawValue, "and siri likes all others!")
             } else {
                 XCTFail("JSON Object of orientation should be a [Int]")
             }
@@ -111,9 +111,9 @@ class JSONSerializationTests: XCTestCase {
         person.girlFriend = girl
 
         if let dict = person.toJSONObject() as? JSONDictionary {
-            XCTAssertEqual(dict["name"] as! String, "lancy", "my name is lancy")
+            XCTAssertEqual((dict["name"] as! String), "lancy", "my name is lancy")
             if let girlDict = dict["girlFriend"] as? JSONDictionary {
-                XCTAssertEqual(girlDict["name"] as! String, "grace", "my girl is grace")
+                XCTAssertEqual((girlDict["name"] as! String), "grace", "my girl is grace")
             } else {
                 XCTFail("JSON Object of girl friend should be a dictionary")
             }
@@ -129,10 +129,10 @@ class JSONSerializationTests: XCTestCase {
         person.friends = [friend1, friend2]
 
         if let dict = person.toJSONObject() as? JSONDictionary {
-            XCTAssertEqual(dict["name"] as! String, "lancy", "my name is lancy")
+            XCTAssertEqual((dict["name"] as! String), "lancy", "my name is lancy")
             if let friends = dict["friends"] as? [JSONDictionary] {
-                XCTAssertEqual(friends[0]["name"] as! String, "grace", "grace is my friend")
-                XCTAssertEqual(friends[1]["name"] as! String, "cambi", "cambi is my friend")
+                XCTAssertEqual((friends[0]["name"] as! String), "grace", "grace is my friend")
+                XCTAssertEqual((friends[1]["name"] as! String), "cambi", "cambi is my friend")
             } else {
                 XCTFail("JSON Object of friends friend should be a [JSONDictionary]")
             }
@@ -146,7 +146,7 @@ class JSONSerializationTests: XCTestCase {
         person.luckyNumbers = [8, 14, 55]
 
         if let dict = person.toJSONObject() as? JSONDictionary {
-            XCTAssertEqual(dict["name"] as! String, "lancy", "my name is lancy")
+            XCTAssertEqual((dict["name"] as! String), "lancy", "my name is lancy")
             if let friends = dict["luckyNumbers"] as? [Int] {
                 XCTAssertEqual(friends[0], 8, "lucky 8!")
                 XCTAssertEqual(friends[1], 14, "lucky 14!")
@@ -167,10 +167,10 @@ class JSONSerializationTests: XCTestCase {
         ]
 
         if let dict = person.toJSONObject() as? JSONDictionary {
-            XCTAssertEqual(dict["name"] as! String, "lancy", "my name is lancy")
+            XCTAssertEqual((dict["name"] as! String), "lancy", "my name is lancy")
             if let singers = dict["favouredSingers"] as? JSONDictionary {
-                XCTAssertEqual((singers["first"] as! JSONDictionary)["name"] as! String, "sia", "sia the best!")
-                XCTAssertEqual((singers["second"] as! JSONDictionary)["name"] as! String, "lana", "lana go lana!")
+                XCTAssertEqual(((singers["first"] as! JSONDictionary)["name"] as! String), "sia", "sia the best!")
+                XCTAssertEqual(((singers["second"] as! JSONDictionary)["name"] as! String), "lana", "lana go lana!")
             } else {
                 XCTFail("JSON Object of friends friend should be a JSON dictionary")
             }
@@ -188,11 +188,11 @@ class JSONSerializationTests: XCTestCase {
         ]
 
         if let dict = person.toJSONObject() as? JSONDictionary {
-            XCTAssertEqual(dict["name"] as! String, "lancy", "my name is lancy")
+            XCTAssertEqual((dict["name"] as! String), "lancy", "my name is lancy")
             if let persons = dict["vips"] as? JSONDictionary {
-                XCTAssertEqual((persons["0"] as! JSONDictionary)["name"] as! String, "lover and family", "My love My Life! Very Importance!")
-                XCTAssertEqual((persons["1"] as! JSONDictionary)["name"] as! String, "best friends", "BFF!")
-                XCTAssertEqual((persons["2"] as! JSONDictionary)["name"] as! String, "maybe boss", "Please raise the pay...")
+                XCTAssertEqual(((persons["0"] as! JSONDictionary)["name"] as! String), "lover and family", "My love My Life! Very Importance!")
+                XCTAssertEqual(((persons["1"] as! JSONDictionary)["name"] as! String), "best friends", "BFF!")
+                XCTAssertEqual(((persons["2"] as! JSONDictionary)["name"] as! String), "maybe boss", "Please raise the pay...")
 
             } else {
                 XCTFail("JSON Object of friends friend should be a JSON dictionary")
@@ -215,15 +215,15 @@ class JSONSerializationTests: XCTestCase {
         ]
 
         if let dict = person.toJSONObject() as? JSONDictionary {
-            XCTAssertEqual(dict["name"] as! String, "lancy", "my name is lancy")
+            XCTAssertEqual((dict["name"] as! String), "lancy", "my name is lancy")
             if let singers = dict["preferNumbers"] as? JSONDictionary {
-                XCTAssertEqual(singers["0"] as! Int, 1, "1")
-                XCTAssertEqual(singers["1"] as! Int, 2, "2")
-                XCTAssertEqual(singers["2"] as! Int, 4, "4")
-                XCTAssertEqual(singers["3"] as! Int, 8, "8")
-                XCTAssertEqual(singers["4"] as! Int, 16, "16")
-                XCTAssertEqual(singers["5"] as! Int, 32, "32")
-                XCTAssertEqual(singers["6"] as! Int, 64, "64")
+                XCTAssertEqual((singers["0"] as! Int), 1, "1")
+                XCTAssertEqual((singers["1"] as! Int), 2, "2")
+                XCTAssertEqual((singers["2"] as! Int), 4, "4")
+                XCTAssertEqual((singers["3"] as! Int), 8, "8")
+                XCTAssertEqual((singers["4"] as! Int), 16, "16")
+                XCTAssertEqual((singers["5"] as! Int), 32, "32")
+                XCTAssertEqual((singers["6"] as! Int), 64, "64")
             } else {
                 XCTFail("JSON Object of friends friend should be a [JSONDictionary]")
             }
