@@ -20,7 +20,7 @@ Manual add CaesarParser to your project requires iOS 7 or later.
 
 Any type that confirm `Deserializable` or `Convertible` protocol can be parse. Besides you can use custom value converter during parsing.
 
-```
+```swift
 /// Use for Class, Nested Type
 public protocol Deserializable {
     init(json: JSONDictionary)
@@ -34,7 +34,7 @@ public protocol Convertible {
 
 Any type that confirm `Serializable` can be parse to JSON.
 
-```
+```swift
 /// convert to JSON object
 public protocol Serializable {
     func toJSONObject() -> JSONObject
@@ -57,8 +57,7 @@ public protocol Serializable {
 
 **Demo Code**
 
-
-```
+```swift
 enum Sex: Int {
 	case Unknown = 0
 	case Male = 1
