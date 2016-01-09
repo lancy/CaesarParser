@@ -58,7 +58,7 @@ public protocol Serializable {
 **Demo Code**
 
 ```swift
-enum Sex: Int {
+enum Gender: Int {
 	case Unknown = 0
 	case Male = 1
 	case Female = 2
@@ -70,14 +70,14 @@ class Person: Deserializable, Serializable {
     var birthday: Double
     var weight: Float
     var adult: Bool = false
-    var sex: Sex = .Unknown
+    var gender: Gender = .Unknown
     var girlFriend: Person?
     var friends = [Person]()
     var luckyNumbers = [Int]()
     var favouredSingers = [String: Person]()
     var vips = [Int: Person]()
     var preferNumbers = [Int: Int]()
-    var orientation = [Sex]()
+    var orientation = [Gender]()
 
     init(json: JSONDictionary) {
         name <-- json["name"]
@@ -85,7 +85,7 @@ class Person: Deserializable, Serializable {
         birthday <-- json["birthday"]
         weight <-- json["weight"]
         adult <-- json["adult"]
-        sex <-- json["sex"]
+        gender <-- json["gender"]
         girlFriend <-- json["girlFriend"]
         friends <-- json["friends"]
         luckyNumbers <-- json["luckyNumbers"]
@@ -103,7 +103,7 @@ class Person: Deserializable, Serializable {
         birthday --> json["birthday"]
         weight --> json["weight"]
         adult --> json["adult"]
-        sex --> json["sex"]
+        gender --> json["gender"]
         girlFriend --> json["girlFriend"]
         friends --> json["friends"]
         luckyNumbers --> json["luckyNumbers"]

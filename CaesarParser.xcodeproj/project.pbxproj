@@ -16,7 +16,6 @@
 		BF7E51F61C3D51BA00823F20 /* JSONSerializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7E51F41C3D51BA00823F20 /* JSONSerializable.swift */; };
 		BF7E51FB1C3D520200823F20 /* JSONDeserializationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7E51F91C3D520200823F20 /* JSONDeserializationTests.swift */; };
 		BF7E51FC1C3D520200823F20 /* JSONSerializationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7E51FA1C3D520200823F20 /* JSONSerializationTests.swift */; };
-		BF7E51FE1C3D53CB00823F20 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = BF7E51FD1C3D53CB00823F20 /* README.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -243,7 +242,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BF7E51FE1C3D53CB00823F20 /* README.md in Sources */,
 				BF7E51FC1C3D520200823F20 /* JSONSerializationTests.swift in Sources */,
 				BF7E51FB1C3D520200823F20 /* JSONDeserializationTests.swift in Sources */,
 			);
