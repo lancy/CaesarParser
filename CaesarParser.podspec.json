@@ -2,7 +2,6 @@
   "name": "CaesarParser",
   "version": "0.0.1",
   "summary": "CaesarParser is a framework written in Swift for you to parse Model from JSON or to JSON.",
-  "description": "",
   "homepage": "https://github.com/lancy/CaesarParser",
   "license": "MIT",
   "authors": {
