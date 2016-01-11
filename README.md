@@ -16,6 +16,26 @@ Cocoa Touch Framework requires iOS 8 or later.
 
 Manual add CaesarParser to your project requires iOS 7 or later.
 
+## Installation
+
+###[Carthage](https://github.com/Carthage/Carthage#installing-carthage)
+
+Add the following line to your [Cartfile](https://github.com/Carthage/Carthage/blob/master/Documentation/Artifacts.md#cartfile).
+
+```
+github "lancy/CaesarParser"
+```
+
+Then do `carthage update`. After that, add the framework to your project.
+
+###[Cocoapods](https://github.com/CocoaPods/CocoaPods)
+
+Add the following line in your `Podfile`.
+
+```
+pod "CaesarParser", :git => 'https://github.com/lancy/CaesarParser.git'
+```
+
 ## Basic Usages
 
 Any type that confirm `Deserializable` or `Convertible` protocol can be parse. Besides you can use custom value converter during parsing.

@@ -6,7 +6,7 @@
 //  Copyright © 2016 Chenyu Lan. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 
 //! Project version number for CaesarParser.
 FOUNDATION_EXPORT double CaesarParserVersionNumber;
