@@ -8,7 +8,7 @@
     "Lancy": "lancy1014@gmail.com"
   },
   "source": {
-    "git": "https://github.com/rpplusplus/CaesarParser.git"
+    "git": "https://github.com/lancy/CaesarParser.git"
   },
   "source_files": [
     "CaesarParser/*.{h,swift}"
