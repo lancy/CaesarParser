@@ -1,3 +1,5 @@
 language: objective-c
-xcode_project: CaesarParser.xcodeproj
-xcode_scheme: CaesarParser
+os: osx
+osx_image: xcode7.1
+script:
+ - xctool -project CaesarParser.xcodeproj -scheme CaesarParser -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO
