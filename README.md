@@ -1,5 +1,8 @@
 # CaesarParser
 
+[![Build
+Status](https://travis-ci.org/lancy/CaesarParser.svg?branch=master)](https://travis-ci.org/lancy/CaesarParser)
+
 CaesarParser is a framework written in Swift for you to parse Model from JSON or to JSON.
 
 ## Features
