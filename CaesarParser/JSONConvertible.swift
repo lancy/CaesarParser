@@ -8,6 +8,14 @@
 
 import Foundation
 
+// MARK: - Default Implementation
+
+extension Convertible {
+    public static func convert(data: JSONObject) -> Self? {
+        return data as? Self ?? nil
+    }
+}
+
 // MARK: - Primitive Type
 
 extension Int: Convertible {
@@ -21,30 +29,13 @@ extension Int: Convertible {
     }
 }
 
-extension String: Convertible {
-    public static func convert(data: JSONObject) -> String? {
-        return data as? String ?? nil
-    }
-}
+extension String: Convertible {}
 
-extension Double: Convertible {
-    public static func convert(data: JSONObject) -> Double? {
-        return data as? Double ?? nil
-    }
-}
+extension Double: Convertible {}
 
-extension Bool: Convertible {
-    public static func convert(data: JSONObject) -> Bool? {
-        return data as? Bool ?? nil
-    }
-}
+extension Bool: Convertible {}
 
-extension Float: Convertible {
-    public static func convert(data: JSONObject) -> Float? {
-        return data as? Float ?? nil
-    }
-}
-
+extension Float: Convertible {}
 
 // MARK: - URL
 
