@@ -12,7 +12,7 @@ import Foundation
 
 /// Use for Class, Nested Type
 public protocol Deserializable {
-    init(json: JSONDictionary)
+    static func modelFromJSONDictionary(json: JSONDictionary) -> Self
 }
 
 /// Use for Primitive Type
@@ -74,7 +74,7 @@ struct Deserialization {
 
     static func convertAndAssign<T: Deserializable>(inout instance: T?, fromJSONObject jsonObject: JSONObject?) -> T? {
         if let data = convertToNilIfNull(jsonObject) as? JSONDictionary {
-            instance = T(json: data)
+            instance = T.modelFromJSONDictionary(data)
         } else {
             instance = nil
         }
@@ -92,7 +92,7 @@ struct Deserialization {
         if let dataArray = convertToNilIfNull(jsonObject) as? [JSONDictionary] {
             array = [T]()
             for data in dataArray {
-                array!.append(T(json: data))
+                array!.append(T.modelFromJSONDictionary(data))
             }
         } else {
             array = nil
@@ -151,7 +151,7 @@ struct Deserialization {
             map = [U: T]()
             for (key, data) in dataMap {
                 if let convertedKey = U.convert(key) {
-                    map![convertedKey] = T(json: data)
+                    map![convertedKey] = T.modelFromJSONDictionary(data)
                 }
             }
         } else {

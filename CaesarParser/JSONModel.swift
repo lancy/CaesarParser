@@ -26,11 +26,11 @@ public extension JSONModel {
 
     // MARK: - Serializable and Deserializable
 
-    init(json: JSONDictionary) {
+    static func modelFromJSONDictionary(json: JSONDictionary) -> Self {
         var convertor = Convertor(type: .Deserialization, json: json)
-        var model = Self()
+        var model = self.init()
         model.convert(&convertor)
-        self = model
+        return model
     }
 
     func toJSONObject() -> JSONObject {
@@ -43,7 +43,7 @@ public extension JSONModel {
     // MARK: - Convenient Methods
 
     func toJSONDictionary() throws -> JSONDictionary {
-        guard let jsonDictionary = toJSONObject() as? JSONDictionary else {
+        guard let jsonDictionary = self.toJSONObject() as? JSONDictionary else {
             throw JSONError.NotJSONDictionary
         }
         return jsonDictionary
@@ -53,7 +53,7 @@ public extension JSONModel {
 
 public struct Convertor {
 
-    enum ConvertorType {
+    public enum ConvertorType {
         case Serialization
         case Deserialization
     }
@@ -62,7 +62,7 @@ public struct Convertor {
     var json: JSONDictionary
     var currentKey: String?
 
-    init(type: ConvertorType, json: JSONDictionary) {
+    public init(type: ConvertorType, json: JSONDictionary) {
         self.type = type
         self.json = json
     }

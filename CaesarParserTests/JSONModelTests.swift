@@ -25,10 +25,7 @@ class JSONModelTests: XCTestCase {
         }
     }
 
-    // initializer requirement 'init(json:)' can only be satisfied by a `required` initializer in the definition of non-final class 'JSONModelTests.Person'
-
     class Person: JSONModel {
-//    final class Person: JSONModel {
         var name = ""
         var nickname: String?
         var age = 0
@@ -48,6 +45,17 @@ class JSONModelTests: XCTestCase {
         required init(name: String) {
             self.name = name
         }
+
+        // Get the complie error: method 'modelFromJSONDictionary' in non-final class 'JSONModelTests.Person' must return `Self` to conform to protocol 'Deserializable'
+        // Seems like protocol default implementation transform Self to concrete type when apply implementation to class
+        // Copy the default implementation to here or add final keyword to work arround.
+
+//        static func modelFromJSONDictionary(json: JSONDictionary) -> Self {
+//            var convertor = Convertor(type: .Deserialization, json: json)
+//            let model = self.init()
+//            model.convert(&convertor)
+//            return model
+//        }
 
         func convert(inout json: Convertor) {
             name <--> json["name"]
@@ -80,7 +88,7 @@ class JSONModelTests: XCTestCase {
     func testJSONModelDefaultImplementation() {
         let origin = ["name": "Grace"]
         do {
-            let person = PurePerson(json: origin)
+            let person = PurePerson.modelFromJSONDictionary(origin)
             let result = try person.toJSONDictionary()
             let originName = origin["name"]
             let resultName = result["name"] as! String
@@ -92,7 +100,7 @@ class JSONModelTests: XCTestCase {
 
     func testString() {
         let json: JSONDictionary = ["name": "Lancy"]
-        let person = Person(json: json)
+        let person = Person.modelFromJSONDictionary(json)
         XCTAssert(person.name == "Lancy", "My name is Lancy, not \(person.name)")
 
         do {
@@ -106,7 +114,7 @@ class JSONModelTests: XCTestCase {
 
     func testOptionalString() {
         let json: JSONDictionary = ["nickname": "sunshine"]
-        let person = Person(json: json)
+        let person = Person.modelFromJSONDictionary(json)
         XCTAssert(person.nickname! == "sunshine", "nickname is sunshine, not \(person.nickname!)")
 
         do {
@@ -118,7 +126,7 @@ class JSONModelTests: XCTestCase {
         }
 
         let emptyJson = JSONDictionary()
-        let aPerson = Person(json: emptyJson)
+        let aPerson = Person.modelFromJSONDictionary(emptyJson)
         XCTAssert(aPerson.nickname == nil, "nickname should be empty")
 
         do {

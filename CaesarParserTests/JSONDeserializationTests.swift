@@ -50,8 +50,10 @@ class JSONDeserializationTests: XCTestCase {
     struct Person: Deserializable {
         var name = ""
 
-        init(json: JSONDictionary) {
-            name <-- json["name"]
+        static func modelFromJSONDictionary(json: JSONDictionary) -> Person {
+            var model = Person()
+            model.name <-- json["name"]
+            return model
         }
 
         init() {}
