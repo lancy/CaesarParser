@@ -88,10 +88,10 @@ enum Gender: Int {
 }
 
 class Person: Deserializable, Serializable {
-    var name: String
-    var age: Int
-    var birthday: Double
-    var weight: Float
+    var name: String?
+    var age: Int?
+    var birthday: Double?
+    var weight: Float?
     var adult: Bool = false
     var gender: Gender = .Unknown
     var girlFriend: Person?
