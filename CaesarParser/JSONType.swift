@@ -14,3 +14,14 @@ public typealias JSONDictionary = [String: JSONObject]
 
 /// A type of any object
 public typealias JSONObject = AnyObject
+
+// MARK: - Deprecated
+
+@available(*, unavailable, renamed="JSONDeserializable")
+typealias Deserializable = JSONDeserializable
+
+@available(*, unavailable, renamed="JSONConvertible")
+typealias Convertible = JSONConvertible
+
+@available(*, unavailable, renamed="JSONSerializable")
+typealias Serializable = JSONSerializable

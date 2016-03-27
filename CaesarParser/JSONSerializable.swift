@@ -9,32 +9,32 @@
 import Foundation
 
 
-extension Int: Serializable {
+extension Int: JSONSerializable {
     public func toJSONObject() -> JSONObject {
         return self
     }
 }
 
-extension String: Serializable {
+extension String: JSONSerializable {
     public func toJSONObject() -> JSONObject {
         return self
     }
 }
 
-extension Double: Serializable {
+extension Double: JSONSerializable {
     public func toJSONObject() -> JSONObject {
         return self
     }
 }
 
 
-extension Float: Serializable {
+extension Float: JSONSerializable {
     public func toJSONObject() -> JSONObject {
         return self
     }
 }
 
-extension Bool: Serializable {
+extension Bool: JSONSerializable {
     public func toJSONObject() -> JSONObject {
         return self
     }

@@ -10,7 +10,7 @@ import Foundation
 
 // MARK: - Primitive Type
 
-extension Int: Convertible {
+extension Int: JSONConvertible {
     public static func convert(data: JSONObject) -> Int? {
         if let int = data as? Int {
             return int
@@ -21,34 +21,34 @@ extension Int: Convertible {
     }
 }
 
-extension String: Convertible {
+extension String: JSONConvertible {
     public static func convert(data: JSONObject) -> String? {
-        return data as? String ?? nil
+        return data as? String
     }
 }
 
-extension Double: Convertible {
+extension Double: JSONConvertible {
     public static func convert(data: JSONObject) -> Double? {
-        return data as? Double ?? nil
+        return data as? Double
     }
 }
 
-extension Bool: Convertible {
+extension Bool: JSONConvertible {
     public static func convert(data: JSONObject) -> Bool? {
-        return data as? Bool ?? nil
+        return data as? Bool
     }
 }
 
-extension Float: Convertible {
+extension Float: JSONConvertible {
     public static func convert(data: JSONObject) -> Float? {
-        return data as? Float ?? nil
+        return data as? Float
     }
 }
 
 
 // MARK: - URL
 
-extension NSURL: Convertible {
+extension NSURL: JSONConvertible {
     public static func convert(data: JSONObject) -> Self? {
         if let str = data as? String, url = self.init(string: str) {
             return url
@@ -59,7 +59,7 @@ extension NSURL: Convertible {
 
 // MARK: - Date
 
-extension NSDate: Convertible {
+extension NSDate: JSONConvertible {
     public static func convert(data: JSONObject) -> Self? {
         if let timestamp = data as? Int {
             return self.init(timeIntervalSince1970: Double(timestamp))

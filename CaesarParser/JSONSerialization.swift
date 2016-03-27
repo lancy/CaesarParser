@@ -11,7 +11,7 @@ import Foundation
 // MARK: - Protocol
 
 /// convert to JSON object
-public protocol Serializable {
+public protocol JSONSerializable {
     func toJSONObject() -> JSONObject
 }
 
@@ -21,7 +21,7 @@ struct Serialization {
 
     // MARK: - General Type Serialization
 
-    static func convertAndAssign<T: Serializable>(property: T?, inout toJSONObject jsonObject: JSONObject?) -> JSONObject? {
+    static func convertAndAssign<T: JSONSerializable>(property: T?, inout toJSONObject jsonObject: JSONObject?) -> JSONObject? {
         if let property = property {
             jsonObject = property.toJSONObject()
         }
@@ -30,7 +30,7 @@ struct Serialization {
 
     // MARK: - Array Serialization
 
-    static func convertAndAssign<T: Serializable>(properties: [T]?, inout toJSONObject jsonObject: JSONObject?) -> JSONObject? {
+    static func convertAndAssign<T: JSONSerializable>(properties: [T]?, inout toJSONObject jsonObject: JSONObject?) -> JSONObject? {
         if let properties = properties {
             jsonObject = properties.map { p in p.toJSONObject() }
         }
@@ -39,7 +39,7 @@ struct Serialization {
 
     // MARK: - Map Serialization
 
-    static func convertAndAssign<T, U where T: Serializable, U: CustomStringConvertible, U: Hashable>(map: [U: T]?, inout toJSONObject jsonObject: JSONObject?) -> JSONObject? {
+    static func convertAndAssign<T, U where T: JSONSerializable, U: CustomStringConvertible, U: Hashable>(map: [U: T]?, inout toJSONObject jsonObject: JSONObject?) -> JSONObject? {
         if let jsonMap = map {
             var json = JSONDictionary()
             for (key, value) in jsonMap {
@@ -52,14 +52,14 @@ struct Serialization {
 
     // MARK: - Raw Representable (Enum) Serialization
 
-    static func convertAndAssign<T: RawRepresentable where T.RawValue: Serializable>(property: T?, inout toJSONObject value: JSONObject?) -> JSONObject? {
+    static func convertAndAssign<T: RawRepresentable where T.RawValue: JSONSerializable>(property: T?, inout toJSONObject value: JSONObject?) -> JSONObject? {
         if let jsonValue: JSONObject = property?.rawValue.toJSONObject() {
             value = jsonValue
         }
         return value
     }
 
-    static func convertAndAssign<T: RawRepresentable where T.RawValue: Serializable>(properties: [T]?, inout toJSONObject jsonObject: JSONObject?) -> JSONObject? {
+    static func convertAndAssign<T: RawRepresentable where T.RawValue: JSONSerializable>(properties: [T]?, inout toJSONObject jsonObject: JSONObject?) -> JSONObject? {
         if let properties = properties {
             jsonObject = properties.map { p in p.rawValue.toJSONObject() }
         }
@@ -72,22 +72,22 @@ struct Serialization {
 
 infix operator --> { associativity right precedence 150 }
 
-public func --> <T: Serializable>(property: T?, inout jsonObject: JSONObject?) -> JSONObject? {
+public func --> <T: JSONSerializable>(property: T?, inout jsonObject: JSONObject?) -> JSONObject? {
     return Serialization.convertAndAssign(property, toJSONObject: &jsonObject)
 }
 
-public func --> <T: Serializable>(properties: [T]?, inout jsonObject: JSONObject?) -> JSONObject? {
+public func --> <T: JSONSerializable>(properties: [T]?, inout jsonObject: JSONObject?) -> JSONObject? {
     return Serialization.convertAndAssign(properties, toJSONObject: &jsonObject)
 }
 
-public func --> <T, U where T: Serializable, U: CustomStringConvertible, U: Hashable>(map: [U: T]?, inout jsonObject: JSONObject?) -> JSONObject? {
+public func --> <T, U where T: JSONSerializable, U: CustomStringConvertible, U: Hashable>(map: [U: T]?, inout jsonObject: JSONObject?) -> JSONObject? {
     return Serialization.convertAndAssign(map, toJSONObject: &jsonObject)
 }
 
-public func --> <T: RawRepresentable where T.RawValue: Serializable>(property: T?, inout jsonObject: JSONObject?) -> JSONObject? {
+public func --> <T: RawRepresentable where T.RawValue: JSONSerializable>(property: T?, inout jsonObject: JSONObject?) -> JSONObject? {
     return Serialization.convertAndAssign(property, toJSONObject: &jsonObject)
 }
 
-public func --> <T: RawRepresentable where T.RawValue: Serializable>(property: [T]?, inout jsonObject: JSONObject?) -> JSONObject? {
+public func --> <T: RawRepresentable where T.RawValue: JSONSerializable>(property: [T]?, inout jsonObject: JSONObject?) -> JSONObject? {
     return Serialization.convertAndAssign(property, toJSONObject: &jsonObject)
 }

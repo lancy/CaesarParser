@@ -47,7 +47,7 @@ class JSONDeserializationTests: XCTestCase {
         ]
     ]
 
-    struct Person: Deserializable {
+    struct Person: JSONDeserializable {
         var name = ""
 
         init(json: JSONDictionary) {
