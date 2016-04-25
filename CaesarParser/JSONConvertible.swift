@@ -10,15 +10,15 @@ import Foundation
 
 // MARK: - Default Implementation
 
-extension Convertible {
+extension JSONConvertible {
     public static func convert(data: JSONObject) -> Self? {
-        return data as? Self ?? nil
+        return data as? Self
     }
 }
 
 // MARK: - Primitive Type
 
-extension Int: Convertible {
+extension Int: JSONConvertible {
     public static func convert(data: JSONObject) -> Int? {
         if let int = data as? Int {
             return int
@@ -29,17 +29,17 @@ extension Int: Convertible {
     }
 }
 
-extension String: Convertible {}
+extension String: JSONConvertible {}
 
-extension Double: Convertible {}
+extension Double: JSONConvertible {}
 
-extension Bool: Convertible {}
+extension Bool: JSONConvertible {}
 
-extension Float: Convertible {}
+extension Float: JSONConvertible {}
 
 // MARK: - URL
 
-extension NSURL: Convertible {
+extension NSURL: JSONConvertible {
     public static func convert(data: JSONObject) -> Self? {
         if let str = data as? String, url = self.init(string: str) {
             return url
@@ -50,7 +50,7 @@ extension NSURL: Convertible {
 
 // MARK: - Date
 
-extension NSDate: Convertible {
+extension NSDate: JSONConvertible {
     public static func convert(data: JSONObject) -> Self? {
         if let timestamp = data as? Int {
             return self.init(timeIntervalSince1970: Double(timestamp))

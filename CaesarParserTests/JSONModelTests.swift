@@ -50,12 +50,12 @@ class JSONModelTests: XCTestCase {
         // Seems like protocol default implementation transform Self to concrete type when apply implementation to class
         // Copy the default implementation to here or add final keyword to work arround.
 
-//        static func modelFromJSONDictionary(json: JSONDictionary) -> Self {
-//            var convertor = Convertor(type: .Deserialization, json: json)
-//            let model = self.init()
-//            model.convert(&convertor)
-//            return model
-//        }
+        static func modelFromJSONDictionary(json: JSONDictionary) -> Self {
+            var convertor = Convertor(type: .Deserialization, json: json)
+            let model = self.init()
+            model.convert(&convertor)
+            return model
+        }
 
         func convert(inout json: Convertor) {
             name <--> json["name"]

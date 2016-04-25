@@ -41,25 +41,25 @@ pod "CaesarParser", :git => 'https://github.com/lancy/CaesarParser.git'
 
 ## Basic Usages
 
-Any type that confirm `Deserializable` or `Convertible` protocol can be parse. Besides you can use custom value converter during parsing.
+Any type that confirm `JSONDeserializable` or `JSONConvertible` protocol can be parse. Besides you can use custom value converter during parsing.
 
 ```swift
 /// Use for Class, Nested Type
-public protocol Deserializable {
+public protocol JSONDeserializable {
     init(json: JSONDictionary)
 }
 
 /// Use for Primitive Type
-public protocol Convertible {
+public protocol JSONConvertible {
     static func convert(json: JSONObject) -> Self?
 }
 ```
 
-Any type that confirm `Serializable` can be parse to JSON.
+Any type that confirm `JSONSerializable` can be parse to JSON.
 
 ```swift
 /// convert to JSON object
-public protocol Serializable {
+public protocol JSONSerializable {
     func toJSONObject() -> JSONObject
 }
 ```
@@ -74,9 +74,9 @@ public protocol Serializable {
 * NSURL
 * NSDate (unix_timestamp to NSDate, can be custom by build-in DateFormatConverter)
 * NSURL (string to URL)
-* Raw representable enums which raw value confirm to `Convertible`
-* Array\<Convertible or Deserializable\>
-* Dictionary\<Convertible and Hashable, Convertible or Deserializable\>
+* Raw representable enums which raw value confirm to `JSONConvertible`
+* Array\<JSONConvertible or JSONDeserializable\>
+* Dictionary\<JSONConvertible and Hashable, JSONConvertible or JSONDeserializable\>
 
 **Demo Code**
 
@@ -87,11 +87,11 @@ enum Gender: Int {
 	case Female = 2
 }
 
-class Person: Deserializable, Serializable {
-    var name: String
-    var age: Int
-    var birthday: Double
-    var weight: Float
+class Person: JSONDeserializable, JSONSerializable {
+    var name: String?
+    var age: Int?
+    var birthday: Double?
+    var weight: Float?
     var adult: Bool = false
     var gender: Gender = .Unknown
     var girlFriend: Person?

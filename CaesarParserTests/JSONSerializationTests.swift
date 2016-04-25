@@ -18,7 +18,7 @@ class JSONSerializationTests: XCTestCase {
         case Female = 2
     }
 
-    class Person: Serializable {
+    class Person: JSONSerializable {
         var name = ""
         var age = 0
         var birthday: Double = 0.0

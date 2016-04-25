@@ -14,7 +14,7 @@ public enum JSONError: ErrorType {
 }
 
 /// JSONModel that is confirm to Serializable and Deserializable
-public protocol JSONModel: Serializable, Deserializable {
+public protocol JSONModel: JSONSerializable, JSONDeserializable {
     init()
     mutating func convert(inout json: Convertor)
 }
@@ -85,7 +85,7 @@ struct Conversion {
 
     // MARK: - Convertible
 
-    static func convert<T where T: Convertible, T: Serializable> (inout property: T?, inout convertor: Convertor) {
+    static func convert<T where T: JSONConvertible, T: JSONSerializable> (inout property: T?, inout convertor: Convertor) {
         guard let key = convertor.currentKey else { return }
 
         switch convertor.type {
@@ -96,7 +96,7 @@ struct Conversion {
         }
     }
 
-    static func convert<T where T: Convertible, T: Serializable> (inout property: T, inout convertor: Convertor) {
+    static func convert<T where T: JSONConvertible, T: JSONSerializable> (inout property: T, inout convertor: Convertor) {
         guard let key = convertor.currentKey else { return }
 
         switch convertor.type {
@@ -107,7 +107,7 @@ struct Conversion {
         }
     }
 
-    static func convert<T where T: Convertible, T: Serializable> (inout property: [T]?, inout convertor: Convertor) {
+    static func convert<T where T: JSONConvertible, T: JSONSerializable> (inout property: [T]?, inout convertor: Convertor) {
         guard let key = convertor.currentKey else { return }
 
         switch convertor.type {
@@ -118,7 +118,7 @@ struct Conversion {
         }
     }
 
-    static func convert<T where T: Convertible, T: Serializable> (inout property: [T], inout convertor: Convertor) {
+    static func convert<T where T: JSONConvertible, T: JSONSerializable> (inout property: [T], inout convertor: Convertor) {
         guard let key = convertor.currentKey else { return }
 
         switch convertor.type {
@@ -131,7 +131,7 @@ struct Conversion {
 
     // MARK: - Raw Value Representable (Enum) Deserialization
 
-    static func convert<T: RawRepresentable where T.RawValue: Convertible, T.RawValue: Serializable>(inout property: T?, inout convertor: Convertor) {
+    static func convert<T: RawRepresentable where T.RawValue: JSONConvertible, T.RawValue: JSONSerializable>(inout property: T?, inout convertor: Convertor) {
         guard let key = convertor.currentKey else { return }
 
         switch convertor.type {
@@ -142,7 +142,7 @@ struct Conversion {
         }
     }
 
-    static func convert<T: RawRepresentable where T.RawValue: Convertible, T.RawValue: Serializable>(inout property: T, inout convertor: Convertor) {
+    static func convert<T: RawRepresentable where T.RawValue: JSONConvertible, T.RawValue: JSONSerializable>(inout property: T, inout convertor: Convertor) {
         guard let key = convertor.currentKey else { return }
 
         switch convertor.type {
@@ -155,7 +155,7 @@ struct Conversion {
 
     // MARK: - Custom Type Deserialization
 
-    static func convert<T where T: Deserializable, T: Serializable> (inout property: T?, inout convertor: Convertor) {
+    static func convert<T where T: JSONDeserializable, T: JSONSerializable> (inout property: T?, inout convertor: Convertor) {
         guard let key = convertor.currentKey else { return }
 
         switch convertor.type {
@@ -166,7 +166,7 @@ struct Conversion {
         }
     }
 
-    static func convert<T where T: Deserializable, T: Serializable> (inout property: T, inout convertor: Convertor) {
+    static func convert<T where T: JSONDeserializable, T: JSONSerializable> (inout property: T, inout convertor: Convertor) {
         guard let key = convertor.currentKey else { return }
 
         switch convertor.type {
@@ -177,7 +177,7 @@ struct Conversion {
         }
     }
 
-    static func convert<T where T: Deserializable, T: Serializable> (inout property: [T]?, inout convertor: Convertor) {
+    static func convert<T where T: JSONDeserializable, T: JSONSerializable> (inout property: [T]?, inout convertor: Convertor) {
         guard let key = convertor.currentKey else { return }
 
         switch convertor.type {
@@ -188,7 +188,7 @@ struct Conversion {
         }
     }
 
-    static func convert<T where T: Deserializable, T: Serializable> (inout property: [T], inout convertor: Convertor) {
+    static func convert<T where T: JSONDeserializable, T: JSONSerializable> (inout property: [T], inout convertor: Convertor) {
         guard let key = convertor.currentKey else { return }
 
         switch convertor.type {
@@ -201,7 +201,7 @@ struct Conversion {
 
     // MARK: - Custom Map Deserialiazation
 
-    static func convert<T, U where T: Convertible, T: Serializable, U: Convertible, U: CustomStringConvertible, U: Hashable> (inout property: [U: T]?, inout convertor: Convertor) {
+    static func convert<T, U where T: JSONConvertible, T: JSONSerializable, U: JSONConvertible, U: CustomStringConvertible, U: Hashable> (inout property: [U: T]?, inout convertor: Convertor) {
         guard let key = convertor.currentKey else { return }
 
         switch convertor.type {
@@ -212,7 +212,7 @@ struct Conversion {
         }
     }
 
-    static func convert<T, U where T: Convertible, T: Serializable, U: Convertible, U: CustomStringConvertible, U: Hashable> (inout property: [U: T], inout convertor: Convertor) {
+    static func convert<T, U where T: JSONConvertible, T: JSONSerializable, U: JSONConvertible, U: CustomStringConvertible, U: Hashable> (inout property: [U: T], inout convertor: Convertor) {
         guard let key = convertor.currentKey else { return }
 
         switch convertor.type {
@@ -223,7 +223,7 @@ struct Conversion {
         }
     }
 
-    static func convert<T, U where T: Deserializable, T: Serializable, U: Convertible, U: CustomStringConvertible, U: Hashable> (inout property: [U: T]?, inout convertor: Convertor) {
+    static func convert<T, U where T: JSONDeserializable, T: JSONSerializable, U: JSONConvertible, U: CustomStringConvertible, U: Hashable> (inout property: [U: T]?, inout convertor: Convertor) {
         guard let key = convertor.currentKey else { return }
 
         switch convertor.type {
@@ -234,7 +234,7 @@ struct Conversion {
         }
     }
 
-    static func convert<T, U where T: Deserializable, T: Serializable, U: Convertible, U: CustomStringConvertible, U: Hashable> (inout property: [U: T], inout convertor: Convertor) {
+    static func convert<T, U where T: JSONDeserializable, T: JSONSerializable, U: JSONConvertible, U: CustomStringConvertible, U: Hashable> (inout property: [U: T], inout convertor: Convertor) {
         guard let key = convertor.currentKey else { return }
 
         switch convertor.type {
@@ -254,65 +254,65 @@ infix operator <--> { associativity right precedence 150 }
 
 // MARK: - Convertible Type
 
-public func <--> <T where T: Convertible, T: Serializable> (inout property: T?, inout convertor: Convertor) {
+public func <--> <T where T: JSONConvertible, T: JSONSerializable> (inout property: T?, inout convertor: Convertor) {
     Conversion.convert(&property, convertor: &convertor)
 }
 
-public func <--> <T where T: Convertible, T: Serializable> (inout property: T, inout convertor: Convertor) {
+public func <--> <T where T: JSONConvertible, T: JSONSerializable> (inout property: T, inout convertor: Convertor) {
     Conversion.convert(&property, convertor: &convertor)
 }
 
-public func <--> <T where T: Convertible, T: Serializable> (inout property: [T]?, inout convertor: Convertor) {
+public func <--> <T where T: JSONConvertible, T: JSONSerializable> (inout property: [T]?, inout convertor: Convertor) {
     Conversion.convert(&property, convertor: &convertor)
 }
 
-public func <--> <T where T: Convertible, T: Serializable> (inout property: [T], inout convertor: Convertor) {
+public func <--> <T where T: JSONConvertible, T: JSONSerializable> (inout property: [T], inout convertor: Convertor) {
     Conversion.convert(&property, convertor: &convertor)
 }
 
 // MARK: - Raw Value Representable (Enum) Deserialization
 
-public func <--> <T: RawRepresentable where T.RawValue: Convertible, T.RawValue: Serializable>(inout property: T?, inout convertor: Convertor) {
+public func <--> <T: RawRepresentable where T.RawValue: JSONConvertible, T.RawValue: JSONSerializable>(inout property: T?, inout convertor: Convertor) {
     Conversion.convert(&property, convertor: &convertor)
 }
 
-public func <--> <T: RawRepresentable where T.RawValue: Convertible, T.RawValue: Serializable>(inout property: T, inout convertor: Convertor) {
+public func <--> <T: RawRepresentable where T.RawValue: JSONConvertible, T.RawValue: JSONSerializable>(inout property: T, inout convertor: Convertor) {
     Conversion.convert(&property, convertor: &convertor)
 }
 
 // MARK: - Custom Type Deserialization
 
-public func <--> <T where T: Deserializable, T: Serializable> (inout property: T?, inout convertor: Convertor) {
+public func <--> <T where T: JSONDeserializable, T: JSONSerializable> (inout property: T?, inout convertor: Convertor) {
     Conversion.convert(&property, convertor: &convertor)
 }
 
-public func <--> <T where T: Deserializable, T: Serializable> (inout property: T, inout convertor: Convertor) {
+public func <--> <T where T: JSONDeserializable, T: JSONSerializable> (inout property: T, inout convertor: Convertor) {
     Conversion.convert(&property, convertor: &convertor)
 }
 
-public func <--> <T where T: Deserializable, T: Serializable> (inout property: [T]?, inout convertor: Convertor) {
+public func <--> <T where T: JSONDeserializable, T: JSONSerializable> (inout property: [T]?, inout convertor: Convertor) {
     Conversion.convert(&property, convertor: &convertor)
 }
 
-public func <--> <T where T: Deserializable, T: Serializable> (inout property: [T], inout convertor: Convertor) {
+public func <--> <T where T: JSONDeserializable, T: JSONSerializable> (inout property: [T], inout convertor: Convertor) {
     Conversion.convert(&property, convertor: &convertor)
 }
 
 // MARK: - Custom Map Deserialiazation
 
-public func <--> <T, U where T: Convertible, T: Serializable, U: Convertible, U: CustomStringConvertible, U: Hashable> (inout property: [U: T]?, inout convertor: Convertor) {
+public func <--> <T, U where T: JSONConvertible, T: JSONSerializable, U: JSONConvertible, U: CustomStringConvertible, U: Hashable> (inout property: [U: T]?, inout convertor: Convertor) {
     Conversion.convert(&property, convertor: &convertor)
 }
 
-public func <--> <T, U where T: Convertible, T: Serializable, U: Convertible, U: CustomStringConvertible, U: Hashable> (inout property: [U: T], inout convertor: Convertor) {
+public func <--> <T, U where T: JSONConvertible, T: JSONSerializable, U: JSONConvertible, U: CustomStringConvertible, U: Hashable> (inout property: [U: T], inout convertor: Convertor) {
     Conversion.convert(&property, convertor: &convertor)
 }
 
-public func <--> <T, U where T: Deserializable, T: Serializable, U: Convertible, U: CustomStringConvertible, U: Hashable> (inout property: [U: T]?, inout convertor: Convertor) {
+public func <--> <T, U where T: JSONDeserializable, T: JSONSerializable, U: JSONConvertible, U: CustomStringConvertible, U: Hashable> (inout property: [U: T]?, inout convertor: Convertor) {
     Conversion.convert(&property, convertor: &convertor)
 }
 
-public func <--> <T, U where T: Deserializable, T: Serializable, U: Convertible, U: CustomStringConvertible, U: Hashable> (inout property: [U: T], inout convertor: Convertor) {
+public func <--> <T, U where T: JSONDeserializable, T: JSONSerializable, U: JSONConvertible, U: CustomStringConvertible, U: Hashable> (inout property: [U: T], inout convertor: Convertor) {
     Conversion.convert(&property, convertor: &convertor)
 }
 
