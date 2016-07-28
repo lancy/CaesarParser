@@ -43,7 +43,7 @@ struct Deserialization {
 
     static func convertAndAssign<T: JSONConvertible>(_ property: inout T, fromJSONObject jsonObject: JSONObject?) {
         var newValue: T?
-        let _ = Deserialization.convertAndAssign(&newValue, fromJSONObject: jsonObject)
+        Deserialization.convertAndAssign(&newValue, fromJSONObject: jsonObject)
         if let newValue = newValue { property = newValue }
     }
 
@@ -62,7 +62,7 @@ struct Deserialization {
 
     static func convertAndAssign<T: JSONConvertible>(_ array: inout [T], fromJSONObject jsonObject: JSONObject?) {
         var newValue: [T]?
-        let _ = Deserialization.convertAndAssign(&newValue, fromJSONObject: jsonObject)
+        Deserialization.convertAndAssign(&newValue, fromJSONObject: jsonObject)
         if let newValue = newValue { array = newValue }
     }
 
@@ -78,7 +78,7 @@ struct Deserialization {
 
     static func convertAndAssign<T: JSONDeserializable>(_ instance: inout T, fromJSONObject jsonObject: JSONObject?) {
         var newValue: T?
-        let _ = Deserialization.convertAndAssign(&newValue, fromJSONObject: jsonObject)
+        Deserialization.convertAndAssign(&newValue, fromJSONObject: jsonObject)
         if let newValue = newValue { instance = newValue }
     }
 
@@ -95,7 +95,7 @@ struct Deserialization {
 
     static func convertAndAssign<T: JSONDeserializable>(_ array: inout [T], fromJSONObject jsonObject: JSONObject?) {
         var newValue: [T]?
-        let _ = Deserialization.convertAndAssign(&newValue, fromJSONObject: jsonObject)
+        Deserialization.convertAndAssign(&newValue, fromJSONObject: jsonObject)
         if let newArray = newValue { array = newArray }
     }
 
@@ -109,7 +109,7 @@ struct Deserialization {
 
     static func convertAndAssign<T>(_ property: inout T, fromJSONObject bundle:(jsonObject: JSONObject?, converter: (JSONObject) -> T?)) {
         var newValue: T?
-        let _ = Deserialization.convertAndAssign(&newValue, fromJSONObject: bundle)
+        Deserialization.convertAndAssign(&newValue, fromJSONObject: bundle)
         if let newValue = newValue { property = newValue }
     }
 
@@ -130,7 +130,7 @@ struct Deserialization {
 
     static func convertAndAssign<T, U where T: JSONConvertible, U: JSONConvertible, U: Hashable>(_ map: inout [U: T], fromJSONObject jsonObject: JSONObject?) {
         var newValue: [U: T]?
-        let _ = Deserialization.convertAndAssign(&newValue, fromJSONObject: jsonObject)
+        Deserialization.convertAndAssign(&newValue, fromJSONObject: jsonObject)
         if let newValue = newValue { map = newValue }
     }
 
@@ -149,7 +149,7 @@ struct Deserialization {
 
     static func convertAndAssign<T, U where T: JSONDeserializable, U: JSONConvertible, U: Hashable>(_ map: inout [U: T], fromJSONObject jsonObject: JSONObject?) {
         var newValue: [U: T]?
-        let _ = Deserialization.convertAndAssign(&newValue, fromJSONObject: jsonObject)
+        Deserialization.convertAndAssign(&newValue, fromJSONObject: jsonObject)
         if let newValue = newValue { map = newValue }
     }
 
@@ -158,7 +158,7 @@ struct Deserialization {
     static func convertAndAssign<T: RawRepresentable where T.RawValue: JSONConvertible>(_ property: inout T?, fromJSONObject jsonObject: JSONObject?)  {
         var newEnumValue: T?
         var newRawEnumValue: T.RawValue?
-        let _ = Deserialization.convertAndAssign(&newRawEnumValue, fromJSONObject: jsonObject)
+        Deserialization.convertAndAssign(&newRawEnumValue, fromJSONObject: jsonObject)
         if let unwrappedNewRawEnumValue = newRawEnumValue {
             if let enumValue = T(rawValue: unwrappedNewRawEnumValue) {
                 newEnumValue = enumValue
@@ -169,7 +169,7 @@ struct Deserialization {
 
     static func convertAndAssign<T: RawRepresentable where T.RawValue: JSONConvertible>(_ property: inout T, fromJSONObject jsonObject: JSONObject?) {
         var newValue: T?
-        let _ = Deserialization.convertAndAssign(&newValue, fromJSONObject: jsonObject)
+        Deserialization.convertAndAssign(&newValue, fromJSONObject: jsonObject)
         if let newValue = newValue { property = newValue }
     }
 
@@ -178,7 +178,7 @@ struct Deserialization {
             array = [T]()
             for data in dataArray {
                 var newValue: T?
-                let _ = Deserialization.convertAndAssign(&newValue, fromJSONObject: data)
+                Deserialization.convertAndAssign(&newValue, fromJSONObject: data)
                 if let newValue = newValue { array!.append(newValue) }
             }
         } else {
@@ -188,7 +188,7 @@ struct Deserialization {
 
     static func convertAndAssign<T: RawRepresentable where T.RawValue: JSONConvertible>(_ array: inout [T], fromJSONObject jsonObject: JSONObject?) {
         var newValue: [T]?
-        let _ = Deserialization.convertAndAssign(&newValue, fromJSONObject: jsonObject)
+        Deserialization.convertAndAssign(&newValue, fromJSONObject: jsonObject)
         if let newArray = newValue { array = newArray }
     }
 
