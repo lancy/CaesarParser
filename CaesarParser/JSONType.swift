@@ -17,11 +17,11 @@ public typealias JSONObject = AnyObject
 
 // MARK: - Deprecated
 
-@available(*, unavailable, renamed="JSONDeserializable")
+@available(*, unavailable, renamed: "JSONDeserializable")
 typealias Deserializable = JSONDeserializable
 
-@available(*, unavailable, renamed="JSONConvertible")
+@available(*, unavailable, renamed: "JSONConvertible")
 typealias Convertible = JSONConvertible
 
-@available(*, unavailable, renamed="JSONSerializable")
+@available(*, unavailable, renamed: "JSONSerializable")
 typealias Serializable = JSONSerializable

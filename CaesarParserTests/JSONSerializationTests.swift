@@ -13,9 +13,9 @@ import CaesarParser
 
 class JSONSerializationTests: XCTestCase {
     enum Gender: Int {
-        case Unknown = 0
-        case Male = 1
-        case Female = 2
+        case unknown = 0
+        case male = 1
+        case female = 2
     }
 
     class Person: JSONSerializable {
@@ -24,7 +24,7 @@ class JSONSerializationTests: XCTestCase {
         var birthday: Double = 0.0
         var weight: Float = 0.0
         var adult = false
-        var gender = Gender.Unknown
+        var gender = Gender.unknown
         var girlFriend: Person?
         var friends = [Person]()
         var luckyNumbers = [Int]()
@@ -76,13 +76,14 @@ class JSONSerializationTests: XCTestCase {
         } else {
             XCTFail("JSON Object should be a dictionary")
         }
+        
     }
 
     func testEnumType() {
         let person = Person(name: "God")
-        person.gender = .Female
+        person.gender = .female
         if let dict = person.toJSONObject() as? JSONDictionary {
-            XCTAssertEqual((dict["gender"] as! Int), Gender.Female.rawValue, "God is a girl")
+            XCTAssertEqual((dict["gender"] as! Int), Gender.female.rawValue, "God is a girl")
         } else {
             XCTFail("JSON Object of Person should be a dictionary")
         }
@@ -90,13 +91,13 @@ class JSONSerializationTests: XCTestCase {
 
     func testEnumTypeArray() {
         let person = Person(name: "siri")
-        person.orientation = [.Male, .Female, .Unknown]
+        person.orientation = [.male, .female, .unknown]
         if let dict = person.toJSONObject() as? JSONDictionary {
             XCTAssertEqual((dict["name"] as! String), "siri", "my name is siri")
             if let orientation = dict["orientation"] as? [Int] {
-                XCTAssertEqual(orientation[0], Gender.Male.rawValue, "siri likes male!")
-                XCTAssertEqual(orientation[1], Gender.Female.rawValue, "siri also likes female!")
-                XCTAssertEqual(orientation[2], Gender.Unknown.rawValue, "and siri likes all others!")
+                XCTAssertEqual(orientation[0], Gender.male.rawValue, "siri likes male!")
+                XCTAssertEqual(orientation[1], Gender.female.rawValue, "siri also likes female!")
+                XCTAssertEqual(orientation[2], Gender.unknown.rawValue, "and siri likes all others!")
             } else {
                 XCTFail("JSON Object of orientation should be a [Int]")
             }

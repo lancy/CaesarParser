@@ -11,10 +11,10 @@ import Foundation
 // MARK: - Primitive Type
 
 extension Int: JSONConvertible {
-    public static func convert(data: JSONObject) -> Int? {
+    public static func convert(_ data: JSONObject) -> Int? {
         if let int = data as? Int {
             return int
-        } else if let str = data as? String, int = Int(str) {
+        } else if let str = data as? String, let int = Int(str) {
             return int
         }
         return nil
@@ -22,25 +22,25 @@ extension Int: JSONConvertible {
 }
 
 extension String: JSONConvertible {
-    public static func convert(data: JSONObject) -> String? {
+    public static func convert(_ data: JSONObject) -> String? {
         return data as? String
     }
 }
 
 extension Double: JSONConvertible {
-    public static func convert(data: JSONObject) -> Double? {
+    public static func convert(_ data: JSONObject) -> Double? {
         return data as? Double
     }
 }
 
 extension Bool: JSONConvertible {
-    public static func convert(data: JSONObject) -> Bool? {
+    public static func convert(_ data: JSONObject) -> Bool? {
         return data as? Bool
     }
 }
 
 extension Float: JSONConvertible {
-    public static func convert(data: JSONObject) -> Float? {
+    public static func convert(_ data: JSONObject) -> Float? {
         return data as? Float
     }
 }
@@ -48,9 +48,9 @@ extension Float: JSONConvertible {
 
 // MARK: - URL
 
-extension NSURL: JSONConvertible {
-    public static func convert(data: JSONObject) -> Self? {
-        if let str = data as? String, url = self.init(string: str) {
+extension URL: JSONConvertible {
+    public static func convert(_ data: JSONObject) -> URL? {
+        if let str = data as? String, let url = self.init(string: str) {
             return url
         }
         return nil
@@ -59,8 +59,8 @@ extension NSURL: JSONConvertible {
 
 // MARK: - Date
 
-extension NSDate: JSONConvertible {
-    public static func convert(data: JSONObject) -> Self? {
+extension Date: JSONConvertible {
+    public static func convert(_ data: JSONObject) -> Date? {
         if let timestamp = data as? Int {
             return self.init(timeIntervalSince1970: Double(timestamp))
         } else if let timestamp = data as? Double {
@@ -72,12 +72,12 @@ extension NSDate: JSONConvertible {
     }
 }
 
-public func DateFormatConverter(dateFormat: String) -> (JSONObject) -> NSDate? {
+public func DateFormatConverter(_ dateFormat: String) -> (JSONObject) -> Date? {
     return { data in
         if let dateString = data as? String {
-            let dateFormatter = NSDateFormatter()
+            let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = dateFormat
-            if let date = dateFormatter.dateFromString(dateString) {
+            if let date = dateFormatter.date(from: dateString) {
                 return date
             }
         }
