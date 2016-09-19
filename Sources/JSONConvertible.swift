@@ -57,30 +57,4 @@ extension URL: JSONConvertible {
     }
 }
 
-// MARK: - Date
 
-extension Date: JSONConvertible {
-    public static func convert(_ data: JSONObject) -> Date? {
-        if let timestamp = data as? Int {
-            return self.init(timeIntervalSince1970: Double(timestamp))
-        } else if let timestamp = data as? Double {
-            return self.init(timeIntervalSince1970: timestamp)
-        } else if let timestamp = data as? NSNumber {
-            return self.init(timeIntervalSince1970: timestamp.doubleValue)
-        }
-        return nil
-    }
-}
-
-public func DateFormatConverter(_ dateFormat: String) -> (JSONObject) -> Date? {
-    return { data in
-        if let dateString = data as? String {
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = dateFormat
-            if let date = dateFormatter.date(from: dateString) {
-                return date
-            }
-        }
-        return nil
-    }
-}

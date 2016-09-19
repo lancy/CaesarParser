@@ -13,7 +13,7 @@ import Foundation
 public typealias JSONDictionary = [String: JSONObject]
 
 /// A type of any object
-public typealias JSONObject = AnyObject
+public typealias JSONObject = Any
 
 // MARK: - Deprecated
 

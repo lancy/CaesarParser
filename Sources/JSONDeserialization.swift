@@ -27,7 +27,7 @@ struct Deserialization {
     // MARK: - Utils
 
     /// Convert object to nil if is Null
-    private static func convertToNilIfNull(_ object: JSONObject?) -> JSONObject? {
+    fileprivate static func convertToNilIfNull(_ object: JSONObject?) -> JSONObject? {
         return object is NSNull ? nil : object
     }
 
@@ -99,23 +99,9 @@ struct Deserialization {
         if let newArray = newValue { array = newArray }
     }
 
-    // MARK: - Custom Value Converter
-
-    static func convertAndAssign<T>(_ property: inout T?, fromJSONObject bundle:(jsonObject: JSONObject?, converter: (JSONObject) -> T?)) {
-        if let data: JSONObject = convertToNilIfNull(bundle.jsonObject), let convertedValue = bundle.converter(data) {
-            property = convertedValue
-        }
-    }
-
-    static func convertAndAssign<T>(_ property: inout T, fromJSONObject bundle:(jsonObject: JSONObject?, converter: (JSONObject) -> T?)) {
-        var newValue: T?
-        Deserialization.convertAndAssign(&newValue, fromJSONObject: bundle)
-        if let newValue = newValue { property = newValue }
-    }
-
     // MARK: - Custom Map Deserialiazation
 
-    static func convertAndAssign<T, U where T: JSONConvertible, U: JSONConvertible, U: Hashable>(_ map: inout [U: T]?, fromJSONObject jsonObject: JSONObject?) {
+    static func convertAndAssign<T, U>(_ map: inout [U: T]?, fromJSONObject jsonObject: JSONObject?) where T: JSONConvertible, U: JSONConvertible, U: Hashable {
         if let dataMap = convertToNilIfNull(jsonObject) as? JSONDictionary {
             map = [U: T]()
             for (key, data) in dataMap {
@@ -128,13 +114,13 @@ struct Deserialization {
         }
     }
 
-    static func convertAndAssign<T, U where T: JSONConvertible, U: JSONConvertible, U: Hashable>(_ map: inout [U: T], fromJSONObject jsonObject: JSONObject?) {
+    static func convertAndAssign<T, U>(_ map: inout [U: T], fromJSONObject jsonObject: JSONObject?) where T: JSONConvertible, U: JSONConvertible, U: Hashable {
         var newValue: [U: T]?
         Deserialization.convertAndAssign(&newValue, fromJSONObject: jsonObject)
         if let newValue = newValue { map = newValue }
     }
 
-    static func convertAndAssign<T, U where T: JSONDeserializable, U: JSONConvertible, U: Hashable>(_ map: inout [U: T]?, fromJSONObject jsonObject: JSONObject?) {
+    static func convertAndAssign<T, U>(_ map: inout [U: T]?, fromJSONObject jsonObject: JSONObject?) where T: JSONDeserializable, U: JSONConvertible, U: Hashable {
         if let dataMap = convertToNilIfNull(jsonObject) as? [String: JSONDictionary] {
             map = [U: T]()
             for (key, data) in dataMap {
@@ -147,7 +133,7 @@ struct Deserialization {
         }
     }
 
-    static func convertAndAssign<T, U where T: JSONDeserializable, U: JSONConvertible, U: Hashable>(_ map: inout [U: T], fromJSONObject jsonObject: JSONObject?) {
+    static func convertAndAssign<T, U>(_ map: inout [U: T], fromJSONObject jsonObject: JSONObject?) where T: JSONDeserializable, U: JSONConvertible, U: Hashable {
         var newValue: [U: T]?
         Deserialization.convertAndAssign(&newValue, fromJSONObject: jsonObject)
         if let newValue = newValue { map = newValue }
@@ -155,7 +141,7 @@ struct Deserialization {
 
     // MARK: - Raw Value Representable (Enum) Deserialization
 
-    static func convertAndAssign<T: RawRepresentable where T.RawValue: JSONConvertible>(_ property: inout T?, fromJSONObject jsonObject: JSONObject?)  {
+    static func convertAndAssign<T: RawRepresentable>(_ property: inout T?, fromJSONObject jsonObject: JSONObject?) where T.RawValue: JSONConvertible  {
         var newEnumValue: T?
         var newRawEnumValue: T.RawValue?
         Deserialization.convertAndAssign(&newRawEnumValue, fromJSONObject: jsonObject)
@@ -167,13 +153,13 @@ struct Deserialization {
         property = newEnumValue
     }
 
-    static func convertAndAssign<T: RawRepresentable where T.RawValue: JSONConvertible>(_ property: inout T, fromJSONObject jsonObject: JSONObject?) {
+    static func convertAndAssign<T: RawRepresentable>(_ property: inout T, fromJSONObject jsonObject: JSONObject?) where T.RawValue: JSONConvertible {
         var newValue: T?
         Deserialization.convertAndAssign(&newValue, fromJSONObject: jsonObject)
         if let newValue = newValue { property = newValue }
     }
 
-    static func convertAndAssign<T: RawRepresentable where T.RawValue: JSONConvertible>(_ array: inout [T]?, fromJSONObject jsonObject: JSONObject?) {
+    static func convertAndAssign<T: RawRepresentable>(_ array: inout [T]?, fromJSONObject jsonObject: JSONObject?) where T.RawValue: JSONConvertible {
         if let dataArray = convertToNilIfNull(jsonObject) as? [JSONObject] {
             array = [T]()
             for data in dataArray {
@@ -186,7 +172,7 @@ struct Deserialization {
         }
     }
 
-    static func convertAndAssign<T: RawRepresentable where T.RawValue: JSONConvertible>(_ array: inout [T], fromJSONObject jsonObject: JSONObject?) {
+    static func convertAndAssign<T: RawRepresentable>(_ array: inout [T], fromJSONObject jsonObject: JSONObject?) where T.RawValue: JSONConvertible {
         var newValue: [T]?
         Deserialization.convertAndAssign(&newValue, fromJSONObject: jsonObject)
         if let newArray = newValue { array = newArray }
@@ -196,7 +182,7 @@ struct Deserialization {
 
 // MARK: - Operator for use in deserialization operations.
 
-infix operator <-- { associativity right precedence 150 }
+infix operator <-- : AssignmentPrecedence
 
 // MARK: - JSONConvertible Type Deserialization
 
@@ -234,48 +220,38 @@ public func <-- <T: JSONDeserializable>(array: inout [T], jsonObject: JSONObject
     Deserialization.convertAndAssign(&array, fromJSONObject: jsonObject)
 }
 
-// MARK: - Custom Value Converter
-
-public func <-- <T>(property: inout T?, bundle:(jsonObject: JSONObject?, converter: (JSONObject) -> T?)) {
-    Deserialization.convertAndAssign(&property, fromJSONObject: bundle)
-}
-
-public func <-- <T>(property: inout T, bundle:(jsonObject: JSONObject?, converter: (JSONObject) -> T?)) {
-    Deserialization.convertAndAssign(&property, fromJSONObject: bundle)
-}
-
 // MARK: - Custom Map Deserialiazation
 
-public func <-- <T, U where T: JSONConvertible, U: JSONConvertible, U: Hashable>(map: inout [U: T]?, jsonObject: JSONObject?) {
+public func <-- <T, U>(map: inout [U: T]?, jsonObject: JSONObject?) where T: JSONConvertible, U: JSONConvertible, U: Hashable {
     Deserialization.convertAndAssign(&map, fromJSONObject: jsonObject)
 }
 
-public func <-- <T, U where T: JSONConvertible, U: JSONConvertible, U: Hashable>(map: inout [U: T], jsonObject: JSONObject?) {
+public func <-- <T, U>(map: inout [U: T], jsonObject: JSONObject?) where T: JSONConvertible, U: JSONConvertible, U: Hashable {
     return Deserialization.convertAndAssign(&map, fromJSONObject: jsonObject)
 }
 
-public func <-- <T, U where T: JSONDeserializable, U: JSONConvertible, U: Hashable>(map: inout [U: T]?, jsonObject: JSONObject?) {
+public func <-- <T, U>(map: inout [U: T]?, jsonObject: JSONObject?) where T: JSONDeserializable, U: JSONConvertible, U: Hashable {
     return Deserialization.convertAndAssign(&map, fromJSONObject: jsonObject)
 }
 
-public func <-- <T, U where T: JSONDeserializable, U: JSONConvertible, U: Hashable>(map: inout [U: T], jsonObject: JSONObject?) {
+public func <-- <T, U>(map: inout [U: T], jsonObject: JSONObject?) where T: JSONDeserializable, U: JSONConvertible, U: Hashable {
     return Deserialization.convertAndAssign(&map, fromJSONObject: jsonObject)
 }
 
 // MARK: - Raw Value Representable (Enum) Deserialization
 
-public func <-- <T: RawRepresentable where T.RawValue: JSONConvertible>(property: inout T?, jsonObject: JSONObject?) {
+public func <-- <T: RawRepresentable>(property: inout T?, jsonObject: JSONObject?) where T.RawValue: JSONConvertible {
     return Deserialization.convertAndAssign(&property, fromJSONObject: jsonObject)
 }
 
-public func <-- <T: RawRepresentable where T.RawValue: JSONConvertible>(property: inout T, jsonObject: JSONObject?) {
+public func <-- <T: RawRepresentable>(property: inout T, jsonObject: JSONObject?) where T.RawValue: JSONConvertible {
     return Deserialization.convertAndAssign(&property, fromJSONObject: jsonObject)
 }
 
-public func <-- <T: RawRepresentable where T.RawValue: JSONConvertible>(array: inout [T]?, jsonObject: JSONObject?) {
+public func <-- <T: RawRepresentable>(array: inout [T]?, jsonObject: JSONObject?) where T.RawValue: JSONConvertible {
     return Deserialization.convertAndAssign(&array, fromJSONObject: jsonObject)
 }
 
-public func <-- <T: RawRepresentable where T.RawValue: JSONConvertible>(array: inout [T], jsonObject: JSONObject?) {
+public func <-- <T: RawRepresentable>(array: inout [T], jsonObject: JSONObject?) where T.RawValue: JSONConvertible {
     return Deserialization.convertAndAssign(&array, fromJSONObject: jsonObject)
 }

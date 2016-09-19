@@ -45,8 +45,7 @@ class JSONDeserializationTests: XCTestCase {
                 "name": "f"
             ]
         ]
-    ]
-
+    ] as JSONDictionary
     struct Person: JSONDeserializable {
         var name = ""
 
@@ -120,29 +119,6 @@ class JSONDeserializationTests: XCTestCase {
         XCTAssertEqual(property, true, "Bool property should have the default value true")
         property <-- dummyResponse["bool"]
         XCTAssertEqual(property, true, "Bool property should equal true")
-    }
-
-    func testOptionalNSDate() {
-        var property: Date?
-        property <-- (dummyResponse["date"], DateFormatConverter("yyyy-MM-dd"))
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        let testDate = dateFormatter.date(from: "2014-09-19")
-        XCTAssertEqual(property!.compare(testDate!), ComparisonResult.orderedSame, "NSDate? property should equal 2014-09-19")
-        property <-- dummyResponse["invalidKey"]
-        XCTAssertNil(property, "NSDate? property should equal nil after invalid assignment")
-    }
-
-    func testNSDate() {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        let defaultTestDate = dateFormatter.date(from: "2015-09-19")
-        var property = defaultTestDate!
-        property <-- (dummyResponse["invalidKey"], DateFormatConverter("yyyy-MM-dd"))
-        XCTAssertEqual(property.compare(defaultTestDate!), ComparisonResult.orderedSame, "NSDate should have the default value 2015-09-19")
-        property <-- (dummyResponse["date"], DateFormatConverter("yyyy-MM-dd"))
-        let testDate = dateFormatter.date(from: "2014-09-19")
-        XCTAssertEqual(property.compare(testDate!), ComparisonResult.orderedSame, "NSDate should have the value 2015-09-19")
     }
 
     func testOptionalNSURL() {
